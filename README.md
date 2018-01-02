@@ -11,16 +11,16 @@ This is a pure L3 routed solution, and daemon set containers must be installed o
 ## Configuration
 
 <dl>
-  <dt>STRONGSWAN\_RIGHT</dt>
+  <dt>STRONGSWAN_RIGHT</dt>
   <dd>The remote gateway's public IP address</dd>
 
-  <dt>STRONGSWAN\_RIGHTID</dt>
+  <dt>STRONGSWAN_RIGHTID</dt>
   <dd>The remote gateway's private IP address</dd>
 
-  <dt>STRONGSWAN\_RIGHTSUBNET</dt>
+  <dt>STRONGSWAN_RIGHTSUBNET</dt>
   <dd>The remote gateways subnet(s) e.g. 10.10.0.0/16,10.16.0.0/24</dd>
 
-  <dt>STRONGSWAN\_PSK</dt>
+  <dt>STRONGSWAN_PSK</dt>
   <dd>The pre-shared key to authenticate with</dd>
 </dl>
 
@@ -30,9 +30,9 @@ This is a pure L3 routed solution, and daemon set containers must be installed o
       -p 500:500/tcp \
       -p 500:500/udp \
       -p 4500:4500/udp \
-      -e STRONGSWAN\_RIGHT=85.254.56.102 \
-      -e STRONGSWAN\_RIGHTID=10.1.0.85 \
-      -e STRONGSWAN\_RIGHTSUBNET=10.1.0.0/16 \
-      -e STRONGSWAN\_PSK=supersecret \
-      --cap-add NET\_ADMIN \
+      -e STRONGSWAN_RIGHT=85.254.56.102 \
+      -e STRONGSWAN_RIGHTID=10.1.0.85 \
+      -e STRONGSWAN_RIGHTSUBNET=10.1.0.0/16 \
+      -e STRONGSWAN_PSK=supersecret \
+      --cap-add NET_ADMIN \
       couchbase/strongswan:1.0.0
