@@ -11,11 +11,14 @@ This is a pure L3 routed solution, and daemon set containers must be installed o
 ## Configuration
 
 <dl>
+  <dt>STRONGSWAN_LEFTID</dt>
+  <dd>The local gateway's identity</dd>
+
   <dt>STRONGSWAN_RIGHT</dt>
   <dd>The remote gateway's public IP address</dd>
 
   <dt>STRONGSWAN_RIGHTID</dt>
-  <dd>The remote gateway's private IP address</dd>
+  <dd>The remote gateway's identity</dd>
 
   <dt>STRONGSWAN_RIGHTSUBNET</dt>
   <dd>The remote gateways subnet(s) e.g. 10.10.0.0/16,10.16.0.0/24</dd>
@@ -30,8 +33,9 @@ This is a pure L3 routed solution, and daemon set containers must be installed o
       -p 500:500/tcp \
       -p 500:500/udp \
       -p 4500:4500/udp \
+      -e STRONGSWAN_LEFTID=aws-us-west \
       -e STRONGSWAN_RIGHT=85.254.56.102 \
-      -e STRONGSWAN_RIGHTID=10.1.0.85 \
+      -e STRONGSWAN_RIGHTID=aws-us-east \
       -e STRONGSWAN_RIGHTSUBNET=10.1.0.0/16 \
       -e STRONGSWAN_PSK=supersecret \
       --cap-add NET_ADMIN \

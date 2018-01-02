@@ -1,20 +1,12 @@
 #!/bin/sh
 
-# Dynamically grab my IP address
-PRIVATE_ADDRESS=$(ip addr show eth0 | awk '/inet / {split($2, a, "/"); print a[1]}')
-
 # Also grab my NATed IP address
 PUBLIC_ADDRESS=$(curl -s canhazip.com)
-
-# Echo out some information
-echo 'Remote Connection Information:'
-echo "        right=${PUBLIC_ADDRESS}"
-echo "        rightid=${PRIVATE_ADDRESS}"
 
 # Update the configuration
 # Note: Take care with ordering here
 # Note: Subnets contain / and may be comma separated, so use a different delimiter
-sed -i s:STRONGSWAN_LEFTID:${PRIVATE_ADDRESS}:g /etc/ipsec.conf
+sed -i s:STRONGSWAN_LEFTID:${STRONGSWAN_LEFTID}:g /etc/ipsec.conf
 sed -i s:STRONGSWAN_LEFT:${PUBLIC_ADDRESS}:g /etc/ipsec.conf
 sed -i s:STRONGSWAN_RIGHTSUBNET:${STRONGSWAN_RIGHTSUBNET}:g /etc/ipsec.conf
 sed -i s:STRONGSWAN_RIGHTID:${STRONGSWAN_RIGHTID}:g /etc/ipsec.conf
@@ -22,7 +14,7 @@ sed -i s:STRONGSWAN_RIGHT:${STRONGSWAN_RIGHT}:g /etc/ipsec.conf
 
 # Update the secrets
 # Note: Your pre-shared key cannot contain : characters
-sed -i s:STRONGSWAN_LEFTID:${PRIVATE_ADDRESS}:g /etc/ipsec.secrets
+sed -i s:STRONGSWAN_LEFTID:${STRONGSWAN_LEFTID}:g /etc/ipsec.secrets
 sed -i s:STRONGSWAN_PSK:${STRONGSWAN_PSK}:g /etc/ipsec.secrets
 
 # Start the IKE daemon
