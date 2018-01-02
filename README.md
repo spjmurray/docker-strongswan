@@ -30,7 +30,6 @@ This is a pure L3 routed solution, and daemon set containers must be installed o
 ## Running
 
     docker run \
-      -p 500:500/tcp \
       -p 500:500/udp \
       -p 4500:4500/udp \
       -e STRONGSWAN_LEFTID=aws-us-west \

@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: strongswan-service
+spec:
+  selector:
+    app: strongswan
+  ports:
+  - name: isakmp-udp
+    protocol: UDP
+    port: 500
+    targetPort: 500
+  - name: ipsec-nat-t
+    protocol: UDP
+    port: 4500
+    targetPort: 4500
+  type: LoadBalancer

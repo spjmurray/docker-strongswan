@@ -10,7 +10,7 @@ COPY ipsec.conf ipsec.secrets /etc/
 COPY starter /usr/local/bin/
 
 # Expose the IKE and IKE-NAT ports
-EXPOSE 500/tcp 500/udp 4500/udp
+EXPOSE 500/udp 4500/udp
 
 # Call the starter script which will configure and start the IKE service
 CMD /usr/local/bin/starter
