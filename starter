@@ -1,16 +1,21 @@
 #!/bin/sh
 
-# Also grab my NATed IP address
-PUBLIC_ADDRESS=$(curl -s canhazip.com)
+# As far as responders on a Flannel overlay are concerned the local
+# address is that of the primary interface.  The remote address is
+# SNATed by the local router so we see a source address of the default
+# route
+
+PRIVATE_ADDRESS=$(ip addr show eth0 | awk '/inet / {split($2, a, "/"); print a[1]}')
+DEFAULT_ROUTE=$(ip route list | grep default | awk '{ print $3; }')
 
 # Update the configuration
 # Note: Take care with ordering here
 # Note: Subnets contain / and may be comma separated, so use a different delimiter
 sed -i s:STRONGSWAN_LEFTID:${STRONGSWAN_LEFTID}:g /etc/ipsec.conf
-sed -i s:STRONGSWAN_LEFT:${PUBLIC_ADDRESS}:g /etc/ipsec.conf
+sed -i s:STRONGSWAN_LEFT:${PRIVATE_ADDRESS}:g /etc/ipsec.conf
 sed -i s:STRONGSWAN_RIGHTSUBNET:${STRONGSWAN_RIGHTSUBNET}:g /etc/ipsec.conf
 sed -i s:STRONGSWAN_RIGHTID:${STRONGSWAN_RIGHTID}:g /etc/ipsec.conf
-sed -i s:STRONGSWAN_RIGHT:${STRONGSWAN_RIGHT}:g /etc/ipsec.conf
+sed -i s:STRONGSWAN_RIGHT:${DEFAULT_ROUTE}:g /etc/ipsec.conf
 
 # Update the secrets
 # Note: Your pre-shared key cannot contain : characters
@@ -18,6 +23,6 @@ sed -i s:STRONGSWAN_LEFTID:${STRONGSWAN_LEFTID}:g /etc/ipsec.secrets
 sed -i s:STRONGSWAN_PSK:${STRONGSWAN_PSK}:g /etc/ipsec.secrets
 
 # Start the IKE daemon
-exec /usr/lib/strongswan/charon
+exec /usr/lib/strongswan/starter --nofork --debug-all --daemon charon
 
 # vi: ts=2 et:
