@@ -14,4 +14,4 @@ spec:
     protocol: UDP
     port: 4500
     targetPort: 4500
-  type: LoadBalancer
+  type: NodePort
