@@ -33,6 +33,8 @@ spec:
           value: aws-us-east
         - name: STRONGSWAN_LEFTSUBNET
           value: 10.0.0.0/16
+        - name: STRONGSWAN_RIGHT
+          value: 182.58.48.76
         - name: STRONGSWAN_RIGHTID
           value: aws-us-west
         - name: STRONGSWAN_RIGHTSUBNET
