@@ -11,6 +11,7 @@ DEFAULT_ROUTE=$(ip route list | grep default | awk '{ print $3; }')
 # Update the configuration
 # Note: Take care with ordering here
 # Note: Subnets contain / and may be comma separated, so use a different delimiter
+sed -i s:STRONGSWAN_LEFTSUBNET:${STRONGSWAN_LEFTSUBNET}:g /etc/ipsec.conf
 sed -i s:STRONGSWAN_LEFTID:${STRONGSWAN_LEFTID}:g /etc/ipsec.conf
 sed -i s:STRONGSWAN_LEFT:${PRIVATE_ADDRESS}:g /etc/ipsec.conf
 sed -i s:STRONGSWAN_RIGHTSUBNET:${STRONGSWAN_RIGHTSUBNET}:g /etc/ipsec.conf

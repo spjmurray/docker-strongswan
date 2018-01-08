@@ -31,6 +31,8 @@ spec:
         env:
         - name: STRONGSWAN_LEFTID
           value: aws-us-east
+        - name: STRONGSWAN_LEFTSUBNET
+          value: 10.0.0.0/16
         - name: STRONGSWAN_RIGHTID
           value: aws-us-west
         - name: STRONGSWAN_RIGHTSUBNET
